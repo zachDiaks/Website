@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/Website/static/css/main.c124b6f8.css",
-    "main.js": "/Website/static/js/main.e2e3c14c.js",
+    "main.css": "/Website/static/css/main.0e31f901.css",
+    "main.js": "/Website/static/js/main.bbc6ba1a.js",
+    "static/media/ZachProfPic.jpg": "/Website/static/media/ZachProfPic.de941a81ac851bab64ba.jpg",
     "index.html": "/Website/index.html",
-    "main.c124b6f8.css.map": "/Website/static/css/main.c124b6f8.css.map",
-    "main.e2e3c14c.js.map": "/Website/static/js/main.e2e3c14c.js.map"
+    "main.0e31f901.css.map": "/Website/static/css/main.0e31f901.css.map",
+    "main.bbc6ba1a.js.map": "/Website/static/js/main.bbc6ba1a.js.map"
   },
   "entrypoints": [
-    "static/css/main.c124b6f8.css",
-    "static/js/main.e2e3c14c.js"
+    "static/css/main.0e31f901.css",
+    "static/js/main.bbc6ba1a.js"
   ]
 }

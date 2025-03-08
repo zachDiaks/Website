@@ -1,7 +1,11 @@
-.Header {
-    color:white
+.AppHeader {
+    display: flex;
+    flex-direction: row;
+    gap: 10%;
+    justify-content: center;
+    width: 100%;
 }
 
-.Header-link {
-    color:white
+.header-link {
+    color: rgb(232, 125, 62);
 }

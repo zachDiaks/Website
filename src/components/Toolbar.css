@@ -1,0 +1,14 @@
+.Toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    gap: 100px;
+    background-color: var(--toolbar-color);
+}
+
+.ToolbarLink {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 100px;
+}

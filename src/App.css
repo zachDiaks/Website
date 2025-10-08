@@ -1,10 +1,34 @@
 .App {
   text-align: center;
-  background-color: #001b2e;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   font-size: calc(10px + 2vmin);
-  color: rgb(214, 214, 214);
+}
+
+:root {
+  --bg-color: #272822;
+  --text-color: #F8F8F2;
+  --toolbar-color: #1E1F1C;
+  --link-color: #66D9EF;
+  --link-hover-color: #A6E22E;
+  --accent-color: #FD971F;
+  --muted-text: #75715E;
+  --error-color: #F92672;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Inter', sans-serif;
+}
+
+header {
+  background-color: var(--toolbar-color);
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--link-hover-color);
 }

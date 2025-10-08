@@ -1,11 +1,1 @@
-.AppHeader {
-    display: flex;
-    flex-direction: row;
-    gap: 10%;
-    justify-content: center;
-    width: 100%;
-}
 
-.header-link {
-    color: rgb(53, 97, 117);
-}

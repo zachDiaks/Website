@@ -2,7 +2,7 @@ import Header from '../components/Header'
 export default function Home() {
     // Render the component
     return (
-        <div className="App-header">
+        <div className="Home-Page">
             <Header />
             <h1>
                 Welcome! I'm Zach.

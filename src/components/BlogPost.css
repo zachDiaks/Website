@@ -2,4 +2,6 @@
     display: block !important;
     justify-content: left !important;
     text-align: left !important;
+    padding-left: 10%;
+    padding-right: 10%;
 }

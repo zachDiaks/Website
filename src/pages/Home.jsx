@@ -13,7 +13,7 @@ export default function Home() {
                 style={{ width: 500, height: 500 }}
             />
             <p>
-                More coming soon!
+                This site is mostly for my personal blog, but it also serves as a personal playground for me to learn a little bit about web development.
             </p>
         </div>
     )

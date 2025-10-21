@@ -1,4 +1,5 @@
 import './App.css';
+import 'katex/dist/katex.min.css';
 import Main from './components/Main'
 function App() {
   return (

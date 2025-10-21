@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Pin, PinOff, Menu } from "lucide-react";
-import './Toolbar.css'
+import { BlogList } from "../utils/constants";
+import "./Toolbar.css";
 
 const Toolbar = () => {
   const [pinned, setPinned] = useState(true);
@@ -13,8 +14,17 @@ const Toolbar = () => {
     if (!pinned) setOpen(!open);
   };
 
+  const [showBlogDropdown, setShowBlogDropdown] = useState(false)
+
+  const renderBlogList = (blogList) => {
+    const linkList = blogList.map((blog) => {
+      return <Link to={`/${blog.path}`}>{`${blog.name}`}</Link>
+    })
+    return linkList
+  }
+
   return (
-    <div className="Toolbar">
+    <div className="Toolbar relative">
       {/* Expanded menu */}
       <AnimatePresence>
         {open && (
@@ -25,59 +35,47 @@ const Toolbar = () => {
             transition={{ duration: 0.25 }}
             className="bg-gray-800 text-white shadow-md rounded-b-2xl px-6 py-3"
           >
-            <div className="ToolbarLink">
-              <div>
-                <Link to="/">
-                  Home
-                </Link>
+            <div className="ToolbarLink flex justify-center gap-6">
+              <Link to="/">Home</Link>
+              <div 
+                className="BlogDropdown ToolbarLink"
+                onMouseEnter={() => setShowBlogDropdown(true)}
+                onMouseLeave={() => setShowBlogDropdown(false)}
+              >
+                Blog
+                {showBlogDropdown && (
+                  renderBlogList(BlogList)
+                )}
               </div>
-              <div>
-                <Link to="/blog">
-                  Blog
-                </Link>
-              </div>
-              <div>
-                <a href="https://github.com/zachDiaks/Website/blob/main/src/resources/resume.pdf">
-                  Resume
-                </a>
-              </div>
-              <div>
-                <a href="https://www.linkedin.com/in/zachary-diaks/">
-                  LinkedIn
-                </a>
-              </div>
+              <a href="https://github.com/zachDiaks/Website/blob/main/src/resources/resume.pdf">
+                Resume
+              </a>
+              <a href="https://www.linkedin.com/in/zachary-diaks/">LinkedIn</a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-      {/* Top bar */}
-      <motion.div
-        initial={{ y: -100 }}
-        animate={{ y: open ? 0 : -60 }}
-        transition={{ type: "spring", stiffness: 200, damping: 20 }}
-      >
 
-        {/* Right side - buttons */}
-        <div>
+      {/* Floating control buttons (always visible) */}
+      <div className="absolute top-2 right-2 flex gap-2 z-50">
+        <button
+          onClick={togglePin}
+          className="p-2 rounded-full hover:bg-gray-800 text-white bg-gray-700 transition"
+          title={pinned ? "Unpin toolbar" : "Pin toolbar"}
+        >
+          {pinned ? <Pin size={20} /> : <PinOff size={20} />}
+        </button>
+
+        {!pinned && (
           <button
-            onClick={togglePin}
-            className="p-2 rounded-full hover:bg-gray-800 transition"
-            title={pinned ? "Unpin toolbar" : "Pin toolbar"}
+            onClick={toggleOpen}
+            className="p-2 rounded-full hover:bg-gray-800 text-white bg-gray-700 transition"
+            title={open ? "Collapse toolbar" : "Expand toolbar"}
           >
-            {pinned ? <Pin size={18} /> : <PinOff size={18} />}
+            <Menu size={20} />
           </button>
-
-          {!pinned && (
-            <button
-              onClick={toggleOpen}
-              className="p-2 rounded-full hover:bg-gray-800 transition"
-              title={open ? "Collapse toolbar" : "Expand toolbar"}
-            >
-              <Menu size={18} />
-            </button>
-          )}
-        </div>
-      </motion.div>
+        )}
+      </div>
     </div>
   );
 };

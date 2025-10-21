@@ -12,3 +12,10 @@
     justify-content: space-evenly;
     gap: 100px;
 }
+
+.BlogDropdown {
+    display: flex;
+    background-color: var(--dropdown-bg-color);
+    flex-direction: column;
+    gap: 10px;
+}

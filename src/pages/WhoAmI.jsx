@@ -4,7 +4,7 @@
 import Header from '../components/Header'
 import BlogPost from '../components/BlogPost'
 
-export default function Blog() {
+export default function Blog({useHeader = true}) {
 const markdownString = `
 # Who am I?
 ___
@@ -18,7 +18,7 @@ So if you do end up reading this, thank you! I hope it's entertaining to someone
 `
     return (
         <div>
-            <Header />
+            {useHeader && (<Header></Header>)}
             <BlogPost contents={markdownString}/>
         </div>
     )

@@ -1,18 +1,9 @@
-import React, { useState } from "react";
+import{ useState } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { Pin, PinOff, Menu } from "lucide-react";
 import { BlogList } from "../utils/constants";
 import "./Toolbar.css";
 
 const Toolbar = () => {
-  const [pinned, setPinned] = useState(true);
-  const [open, setOpen] = useState(true);
-
-  const togglePin = () => setPinned(!pinned);
-  const toggleOpen = () => {
-    if (!pinned) setOpen(!open);
-  };
 
   const [showBlogDropdown, setShowBlogDropdown] = useState(false)
 
@@ -23,59 +14,46 @@ const Toolbar = () => {
     return linkList
   }
 
+  const handleMouseover = (shouldSet) => {
+    /**
+     * On mouseover:
+     *  1) When entering, set new background to make the bloglist more visible
+     *  2) When exiting, restore background
+     *  3) Either expand or destroy the dropdown by setting the div's state
+     */
+    const targetElement = document.querySelector(".BlogLinkDiv")
+    if (shouldSet && targetElement) {
+      targetElement.classList.remove('BlogDropdown')
+      targetElement.classList.add('BlogDropdown-Expanded')
+    } else if(targetElement) {
+      targetElement.classList.remove('BlogDropdown-Expanded')
+      targetElement.classList.add('BlogDropdown')
+    }
+    setShowBlogDropdown(shouldSet)
+  }
+
   return (
     <div className="Toolbar relative">
-      {/* Expanded menu */}
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -100 }}
-            transition={{ duration: 0.25 }}
-            className="bg-gray-800 text-white shadow-md rounded-b-2xl px-6 py-3"
-          >
-            <div className="ToolbarLink flex justify-center gap-6">
-              <Link to="/">Home</Link>
-              <div 
-                className="BlogDropdown ToolbarLink"
-                onMouseEnter={() => setShowBlogDropdown(true)}
-                onMouseLeave={() => setShowBlogDropdown(false)}
-              >
-                Blog
-                {showBlogDropdown && (
-                  renderBlogList(BlogList)
-                )}
-              </div>
-              <a href="https://github.com/zachDiaks/Website/blob/main/src/resources/resume.pdf">
-                Resume
-              </a>
-              <a href="https://www.linkedin.com/in/zachary-diaks/">LinkedIn</a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
-      {/* Floating control buttons (always visible) */}
-      <div className="absolute top-2 right-2 flex gap-2 z-50">
-        <button
-          onClick={togglePin}
-          className="p-2 rounded-full hover:bg-gray-800 text-white bg-gray-700 transition"
-          title={pinned ? "Unpin toolbar" : "Pin toolbar"}
+      <div className="ToolbarLink flex justify-center gap-6">
+        <Link to="/">Home</Link>
+        <div
+          className="BlogLinkDiv BlogDropdown ToolbarLink"
+          onMouseEnter={() => handleMouseover(true)}
+          onMouseLeave={() => handleMouseover(false)}
         >
-          {pinned ? <Pin size={20} /> : <PinOff size={20} />}
-        </button>
-
-        {!pinned && (
-          <button
-            onClick={toggleOpen}
-            className="p-2 rounded-full hover:bg-gray-800 text-white bg-gray-700 transition"
-            title={open ? "Collapse toolbar" : "Expand toolbar"}
-          >
-            <Menu size={20} />
-          </button>
-        )}
+          Blog
+          {showBlogDropdown && (
+            renderBlogList(BlogList)
+          )}
+        </div>
+        <a href="https://github.com/zachDiaks">Projects</a>
+        <a href="https://github.com/zachDiaks/Website/blob/main/src/resources/resume.pdf">
+          Resume
+        </a>
+        <a href="https://www.linkedin.com/in/zachary-diaks/">LinkedIn</a>
       </div>
+
     </div>
   );
 };

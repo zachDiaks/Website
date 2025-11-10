@@ -15,7 +15,14 @@
 
 .BlogDropdown {
     display: flex;
-    background-color: var(--dropdown-bg-color);
+    background-color: var(--toolbar-color);
     flex-direction: column;
     gap: 10px;
+}
+
+.BlogDropdown-Expanded {
+    display: flex;
+    background-color: var(--dropdown-bg-color);
+    flex-direction: column;
+    gap: 10px;   
 }

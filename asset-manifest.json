@@ -1,7 +1,8 @@
 {
   "files": {
-    "main.css": "/Website/static/css/main.1be06a93.css",
-    "main.js": "/Website/static/js/main.84b37850.js",
+    "main.css": "/Website/static/css/main.3622c717.css",
+    "main.js": "/Website/static/js/main.6c09153b.js",
+    "static/media/resume.pdf": "/Website/static/media/resume.0a79904b834a24ae77ba.pdf",
     "static/media/ZachProfPic.jpg": "/Website/static/media/ZachProfPic.de941a81ac851bab64ba.jpg",
     "static/media/KaTeX_AMS-Regular.ttf": "/Website/static/media/KaTeX_AMS-Regular.853be92419a6c3766b9a.ttf",
     "static/media/KaTeX_Main-Regular.ttf": "/Website/static/media/KaTeX_Main-Regular.9eba1d77abcf2aa6e94e.ttf",
@@ -64,11 +65,11 @@
     "static/media/KaTeX_Size3-Regular.woff": "/Website/static/media/KaTeX_Size3-Regular.7947224e8a9914fa332b.woff",
     "static/media/KaTeX_Size3-Regular.woff2": "/Website/static/media/KaTeX_Size3-Regular.e1951519f6f0596f7356.woff2",
     "index.html": "/Website/index.html",
-    "main.1be06a93.css.map": "/Website/static/css/main.1be06a93.css.map",
-    "main.84b37850.js.map": "/Website/static/js/main.84b37850.js.map"
+    "main.3622c717.css.map": "/Website/static/css/main.3622c717.css.map",
+    "main.6c09153b.js.map": "/Website/static/js/main.6c09153b.js.map"
   },
   "entrypoints": [
-    "static/css/main.1be06a93.css",
-    "static/js/main.84b37850.js"
+    "static/css/main.3622c717.css",
+    "static/js/main.6c09153b.js"
   ]
 }

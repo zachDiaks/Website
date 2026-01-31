@@ -2,6 +2,7 @@ export const BlogList =
     [
         {
             name: "Who am I?",
-            path: "whoami"
-        }
+            path: "whoami",
+            thumbnail: "ZachProfPic.jpg"
+        },
     ]

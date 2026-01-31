@@ -1,11 +1,11 @@
 import { Routes, Route } from 'react-router-dom'
 import Home from '../pages/Home'
-import Blog from '../pages/WhoAmI'
+import Benford from '../pages/Benford'
 export default function Main() {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/whoami" element={<Blog />} />
+            <Route path="/benford" element={<Benford />} />
         </Routes>
     )
 }

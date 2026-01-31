@@ -1,10 +1,9 @@
 /**
  * Main blog page
  */
-import Header from '../components/Header'
-import BlogPost from '../components/BlogPost'
+import BlogPost from './BlogPost'
 
-export default function Blog({useHeader = true}) {
+export default function Intro() {
 const markdownString = `
 # Welcome!
 ___
@@ -19,7 +18,6 @@ ___
 `
     return (
         <div>
-            {useHeader && (<Header></Header>)}
             <BlogPost contents={markdownString}/>
         </div>
     )

@@ -4,6 +4,7 @@ import Header from '../components/Header'
 export default function Benford() {
     const markdownString = `
 # Using power laws as an excuse to learn web scraping
+---
 When my wife and I go on a walk to Coolidge Corner, we ususally stop in at our favorite bookstore: Brookline Booksmith. When I'm there, I have a bad habit of
 buying Math books from the discount non-fiction table which I typically stop reading after I hit 100 pages. This time around, for $8, I picked up [Grapes of Math](https://www.goodreads.com/book/show/13547287-the-grapes-of-math).
 
@@ -14,6 +15,7 @@ The book outlines some interesting patterns in nature and the math that describe
 I'm currently a Quality Engineer at MathWorks, supporting the [Sensor Fusion and Tracking Toolbox](https://www.mathworks.com/help/fusion/index.html). I've been meaning to learn how do web scraping so I set off to investigate just how Zipfian and Benfordian the documentation for our toolbox is!
 
 ## The Experiment
+---
 After a little bit of reading, it became clear that the most popular tool for this job is [Playwright](https://playwright.dev/python/). Now technically Playwright is advertised as a tool for automated testing for web applications. However, you can also use it to read in contents of web pages and understand the hierarchical structure of a website.
 
 So the setup is simple:
@@ -23,9 +25,12 @@ So the setup is simple:
 4. Analyze the text in those files!
 
 ## The Results
+---
 ### Adherance to Benford's Law
 We'll start with a look at Benford's Law, since it is a bit simpler. This law predicts that for any naturally occuring dataset, the leading digit of all numbers in that dataset is likely to be small. How likely is determined by the following distribution:
-$$P(d) = log10(1 + \frac{1}{d})$$
+$$
+P(d) = log10(1 + \\frac{1}{d})
+$$
 
 Where $P(d)$ is the probability of the leading digit of a number in the dataset being some digit $d$ (bounded from 0-9). Numerically, this looks like:
 | d | P(d)|
@@ -48,8 +53,11 @@ It's worth pausing for a moment to think about the dataset that we're analyzing 
 So perhaps there will be a bias towards leading digits for default values like 3 for \`AssignmentThreshold\`. Or perhaps there are some example parameters which appear very often across our documentation pages like the Latitude, Longitude, and Altitude for Logan Airport (\`[42.366978, -71.022362, 50]\`).
  
 #### Benfordian Results
+---
 So how closely does our documentation adhere to Benford's Law? To analyze this we extract all of the numbers from the raw text of each web page, then extract the first digit of each of those numbers. We plot a histogram for the occurrence of each leading digit, and overlay the expected digit count. This expected count is computed as:
-$$E(d) = N * P(d)$$
+$$
+E(d) = N * P(d)
+$$
 
 where $N$ is the total amount of numbers found in our dataset. Here are the results:
 
@@ -62,7 +70,9 @@ By the eye-test, our distribution follows Benford's law pretty closely! Slight d
 I was originally going to go with a simple Chi-squared test since this is what I'm familiar with from undergrad. However, some quick Googling told me that MAD is a more common and reliable statistical test for Benford's law adherance since it is sample-size independent. Chi-squared tests can be sensitive to large datasets where small deviations begin to become statistically significant.
 
 A MAD test checks the average deviation of observations against their expected values, and is computed as:
-$$\\text{MAD} = \\frac{\\sum_{i=1}^{K} |O_i - E_i|}{K}$$
+$$
+\\text{MAD} = \\frac{\\sum_{i=1}^{K} |O_i - E_i|}{K}
+$$
 
 Where $O_i$ represents the observation for some digit $i$ and $E_i$ is the expected value for that same digit. For our use case, $K = 9$ since we're only considering digits 1-9.
 
@@ -75,7 +85,7 @@ Dr. Mark Nigrini in his book "Benford's Law: Applications for Forensic Accountin
 | 0.012 to 0.015 | Marginally acceptable conformity |
 | Above 0.015 | Non-conformity |
 
-Our dataset has $\text{MAD} = 0.0137$ which falls into the "Marginally acceptable" range for MAD which, at least to me, makes a lot of sense. Firstly, we're not doing any forensic accounting so these ranges are likely a bit strict to begin with for our acceptance criteria for technical documentation. I doubt the IRS is going to be auditing our documentation for cooking our books. And secondly, like we mentioned before, our dataset has some "human-injected" numbers which are often repeated (copyright dates, default values for certain parameters, physical constants) which are likely to skew the dataset. This analysis hasn't been done for this particular blog post, but I might come back and update this on a rainy day if I ever do a deep dive!
+Our dataset has $\\text{MAD} = 0.0137$ which falls into the "Marginally acceptable" range for MAD which, at least to me, makes a lot of sense. Firstly, we're not doing any forensic accounting so these ranges are likely a bit strict to begin with for our acceptance criteria for technical documentation. I doubt the IRS is going to be auditing our documentation for cooking our books. And secondly, like we mentioned before, our dataset has some "human-injected" numbers which are often repeated (copyright dates, default values for certain parameters, physical constants) which are likely to skew the dataset. This analysis hasn't been done for this particular blog post, but I might come back and update this on a rainy day if I ever do a deep dive!
 
 Again, it's worth pausing to challenge our assumptions. Are we just making excuses to make a cool-looking blog post with a nice checkmark at the end saying "Yay, we adhere to the law! Don't look over here at this ugly data which might say that we don't"? It is a somewhat subjective call to determine which MAD ranges constitute adherance to the law. However, since our dataset passes the eye-test and since these ranges are well-established for forensic accounting (where these ranges are pretty strict), I feel comfortable saying that:
  > Our dataset adheres to Benford's Law!

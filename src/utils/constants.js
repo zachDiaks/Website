@@ -2,7 +2,13 @@ export const BlogList =
     [
         {
             path: "benford",
-            name: "Benford's Law",
-            thumbnail: "BenfordThumb.png"
+            name: "Power Laws and Web Scraping: Benford's Law",
+            thumbnail: "BenfordResult.png"
+        },
+
+        {
+            path: "zipf",
+            name: "Power Laws and Web Scraping: Zipf's Law",
+            thumbnail: "ZipfResult.png"
         }
     ]

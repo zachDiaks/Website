@@ -5,3 +5,55 @@
     padding-left: 10%;
     padding-right: 10%;
 }
+
+/* Container for horizontal scrolling on mobile */
+.blogPost table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-family: sans-serif;
+  font-size: 2rem;
+}
+
+/* Add padding to headers and cells */
+.blogPost th, 
+.blogPost td {
+  padding: 10px 10px; /* This is the "magic" for the cramped look */
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Add this to your BlogPost.css */
+.blogPost blockquote {
+  margin: 2rem 0;
+  padding: 0.5rem 1.5rem;
+  border-left: 4px solid #54b87d; /* Accent */
+  background-color: #0c0c0d;    
+  color: #e1e3e9;               
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* If there's a paragraph inside the blockquote, remove its bottom margin */
+.blogPost blockquote p {
+  margin: 0;
+}
+
+/* Center the container and the image */
+.blogPost p:has(img) {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.blogPost img {
+  /* Control the size here */
+  width: 100%;           /* Scale to the width of the text */
+  max-width: 800px;      /* But don't let it get ridiculously huge */
+  
+  height: auto;          /* Maintain aspect ratio */
+  display: block;
+  border-radius: 8px;    /* Optional: nice rounded corners */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Optional: subtle depth */
+}

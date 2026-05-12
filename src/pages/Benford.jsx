@@ -16,7 +16,7 @@ I'm currently a Quality Engineer at MathWorks, supporting the [Sensor Fusion and
 
 ## The Experiment
 ---
-After a little bit of reading, it became clear that the most popular tool for this job is [Playwright](https://playwright.dev/python/). Now technically Playwright is advertised as a tool for automated testing for web applications. However, you can also use it to read in contents of web pages and understand the hierarchical structure of a website.
+At work, I sometimes use [Playwright](https://playwright.dev/python/) when testing web applications. However, you can also use it to read in contents of web pages and understand the hierarchical structure of a website. For that reason, it's a great tool for web scraping!
 
 So the setup is simple:
 1. Start with the landing page for our documentation
@@ -26,7 +26,7 @@ So the setup is simple:
 
 ## The Results
 ---
-### Adherance to Benford's Law
+### Expectations for Adherence to Benford's Law
 We'll start with a look at Benford's Law, since it is a bit simpler. This law predicts that for any naturally occuring dataset, the leading digit of all numbers in that dataset is likely to be small. How likely is determined by the following distribution:
 $$
 P(d) = log10(1 + \\frac{1}{d})
@@ -52,16 +52,16 @@ It's worth pausing for a moment to think about the dataset that we're analyzing 
 
 So perhaps there will be a bias towards leading digits for default values like 3 for \`AssignmentThreshold\`. Or perhaps there are some example parameters which appear very often across our documentation pages like the Latitude, Longitude, and Altitude for Logan Airport (\`[42.366978, -71.022362, 50]\`).
  
-#### Benfordian Results
+### So, how did we do?
 ---
-So how closely does our documentation adhere to Benford's Law? To analyze this we extract all of the numbers from the raw text of each web page, then extract the first digit of each of those numbers. We plot a histogram for the occurrence of each leading digit, and overlay the expected digit count. This expected count is computed as:
+To analyze our adherence to this law, we extract all of the numbers from the raw text of each web page, then extract the first digit of each of those numbers. We plot a histogram for the occurrence of each leading digit, and overlay the expected digit count. This expected count is computed as:
 $$
 E(d) = N * P(d)
 $$
 
 where $N$ is the total amount of numbers found in our dataset. Here are the results:
 
-![Benford Result](./BenfordResult.png)
+![Benford Result](https://github.com/zachDiaks/mw-benfords-law/blob/main/BenfordResult.png?raw=true)
 
 By the eye-test, our distribution follows Benford's law pretty closely! Slight deviations are natural in real datasets, but how much deviation is too much to consider your dataset no longer adherent to a natural law? For this, we can leverage some common statistical tests:
 1. Chi-squared Test
@@ -96,12 +96,11 @@ Additionally, as mentioned before, there are *some* deviations from the law. It'
 
 Finally, another practice which is followed to have a higher level of confidence when evaluating Benford's Law adherence is to evaluate the distribution of the **second** digit of each number in the dataset. Benford's Law describes that for increasing $N$ where $N$ is the location of the digit that we're analyzing in a number, the curve gets flatter and flatter, eventually approaching a uniform distribution.
 
-### Adherance to Zipf's law
-1. Analysis using a simple slope comparison
-2. Using the Mandlebrot Refinement to explain the initial curve in the dataset. This is apparently a common thing.
-3. A more naiive approach to (2) is zooming in on the first section and showing that it follows a different linear curve in the beginning, then is consistent for the tail - Probably leave this out
-4. Show some of the top words. Notice that most of the top ones agree with the same top words the video!
-![Zipf Result](./ZipfResult.png)
+## Next up, Zipf's Law
+---
+In my next post, I'll analyze our documentation's adherence to Zipf's Law! Here's a cool picture to entice you to keep reading!
+
+![Zipf Result](https://github.com/zachDiaks/mw-benfords-law/blob/main/ZipfResult.png?raw=true)
 `
     return (
         <div>

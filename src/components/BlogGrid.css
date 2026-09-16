@@ -46,3 +46,73 @@
 .blog-title {
   font-size: 1.1rem;
 }
+
+.blog-container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tag-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 20px auto 0;
+  max-width: 900px;
+  padding: 0 20px;
+}
+
+.tag-pill {
+  background-color: var(--toolbar-color, #1E1F1C);
+  color: var(--text-color, #F8F8F2);
+  border: 1px solid var(--muted-text, #75715E);
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.tag-pill:hover {
+  border-color: var(--link-color, #66D9EF);
+  color: var(--link-color, #66D9EF);
+}
+
+.tag-pill.active {
+  background-color: var(--accent-color, #FD971F);
+  border-color: var(--accent-color, #FD971F);
+  color: #1E1F1C;
+  font-weight: bold;
+}
+
+.card-tags {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  z-index: 2;
+}
+
+.card-tag-badge {
+  background: rgba(30, 31, 28, 0.85);
+  color: var(--link-color, #66D9EF);
+  border: 1px solid rgba(102, 217, 239, 0.5);
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.5px;
+}
+
+.no-blogs-message {
+  color: var(--muted-text, #75715E);
+  font-style: italic;
+  margin: 40px auto;
+  font-size: 1.1rem;
+}
+

@@ -8,15 +8,20 @@ export default function Benford() {
 When my wife and I go on a walk to Coolidge Corner, we usually stop in at our favorite bookstore: Brookline Booksmith. When I'm there, I have a bad habit of
 buying Math books from the discount non-fiction table which I typically stop reading after I hit 100 pages. This time around, for $8, I picked up [The Grapes of Math](https://www.goodreads.com/book/show/13547287-the-grapes-of-math).
 
-The book outlines some interesting patterns in nature and the math that describes them. One night, the author reminded me of two empirical laws which seem too bizarre to be real: [Zipf's Law](https://www.wikiwand.com/en/articles/Zipf%27s_law) and [Benford's Law](https://www.wikiwand.com/en/articles/Benford%27s_law). I first encountered these laws in this [Vsauce video](https://www.youtube.com/watch?v=fCn8zs912OE) from 2015, around the same time when I started my undergraduate degree in Physics and began learning about power laws. I won't go into great detail to explain these laws here - for that, I recommend watching that video. However, revisiting this topic got me thinking...
+The book outlines some interesting patterns in nature and the math that describes them. One night, the author reminded me of two empirical laws which seem too bizarre to be real: [Zipf's Law](https://www.wikiwand.com/en/articles/Zipf%27s_law) and [Benford's Law](https://www.wikiwand.com/en/articles/Benford%27s_law). I first encountered these laws in this [Vsauce video](https://www.youtube.com/watch?v=fCn8zs912OE) from 2015, around the same time when I started my undergraduate degree in Physics and began learning about power laws. I won't go into great detail to explain these laws here - for that, I recommend watching that video. 
+However, I'll summarize them briefly:
+- **Benford's Law** states that the leading digit of a number in any naturally occurring set of numbers (e.g. income statements, population data, social media metrics) is likely to be small with exponentially decreasing probability as the digit increases (less wordy explanation below).
+- **Zipf's Law** states that the frequency of a word in a corpus of text is inversely proportional to the rank of that word. In other words, the second most common word appears $1/2$ as often as the most common word. The third most common word appears $1/3$ as often as the most common word... you get the picture. 
 
->Are there naturally occurring datasets that *I* interact with often, which are Zipfian/Benfordian? 
+Some old guy, angry at Quantum Mechanics, once said "God does not play dice with the universe." The existence of such laws make this quote hard to argue with, and is always striking to me.
+The shock value is also greater when you can observe these behaviors in your everyday life. Which led me to my main question here:
+>Do the bodies of text I encounter on a day-to-day basis also follow these distributions?
 
-I'm currently a Quality Engineer at MathWorks, supporting the [Sensor Fusion and Tracking Toolbox](https://www.mathworks.com/help/fusion/index.html). I've been meaning to learn how to do web scraping so I set off to investigate just how Zipfian and Benfordian the documentation for our toolbox is!
+I'm currently a Quality Engineer at MathWorks, supporting the [Sensor Fusion and Tracking Toolbox](https://www.mathworks.com/help/fusion/index.html). I've been meaning to learn more about web scraping, so I set off to investigate just how Zipfian and Benfordian the documentation for our toolbox is!
 
 ## The Experiment
 ---
-At work, I sometimes use [Playwright](https://playwright.dev/python/) when testing web applications. However, you can also use it to read in contents of web pages and understand the hierarchical structure of a website. For that reason, it's a great tool for web scraping!
+At work, I sometimes use [Playwright](https://playwright.dev/python/) when testing web applications. Playwright can also be used to read in contents of web pages and understand the hierarchical structure of a website, making it a great tool for web scraping!
 
 So the setup is simple:
 1. Start with the landing page for our documentation
@@ -24,15 +29,26 @@ So the setup is simple:
 3. Save off the contents into a series of text files
 4. Analyze the text in those files!
 
+A couple of rules for the game:
+1. For words, I'm considering any text containing ONLY letters a-z separated by a space. To stretch the limits of Zipf's law, and since this is technical documentation, I'm considering function/class/property names to also be words.
+2. For numbers, we consider any numeric string (integer/non-integer, positive, negative) to be numbers in the dataset. We strip the sign for negative numbers since Benford's Law is more focused with the magnitude of numbers and doesn't really care about direction/sign.
+As you'll see later in the analysis, we only consider digits 1-9, but I did extract numbers with leading zeros (e.g. 0.1) for further analysis down the road.
+
+If you're interested in the code for the web scraping or data analysis, check out [this repository](https://github.com/zachDiaks/mw-benfords-law) (namely, \`Main.ipynb\` and \`buildData.py\`).
+I might do a write up on the logistics one day, and if you're lucky I'll update the README ;)
+
 ## The Results
 ---
 ### Expectations for Adherence to Benford's Law
-We'll start with a look at Benford's Law, since it is a bit simpler. This law predicts that for any naturally occurring dataset, the leading digit of all numbers in that dataset is likely to be small. How likely is determined by the following distribution:
+Benford's Law is a bit simpler to visually represent, so we'll start our analysis there. This law predicts that for any naturally occurring set of numbers, the leading digit of any number in that set is likely to be small. How likely is determined by the following distribution:
 $$
 P(d) = \\log_{10}(1 + \\frac{1}{d})
 $$
 
-Where $P(d)$ is the probability of the leading digit of a number in the dataset being some digit $d$ (bounded from 1-9). Numerically, this looks like:
+Where $P(d)$ is the probability of the leading digit of a number in the dataset being some digit $d$ (bounded from 1-9). 
+Those familiar with logarithms will recognize the implications of this distribution: as the digit increases, the probability of it being the leading digit some number in the dataset **decreases exponentially**.
+
+Numerically, this looks like:
 | d | P(d)|
 |:---|:---|
 |1| 30.10%|
@@ -44,13 +60,6 @@ Where $P(d)$ is the probability of the leading digit of a number in the dataset 
 |7| 5.80%|
 |8| 5.12%|
 |9| 4.58%|
-
-It's worth pausing for a moment to think about the dataset that we're analyzing here. In our documentation pages, the numbers that you'll find fall into a few categories:
-1. Dates at the bottom of each page for the MathWorks copyright (1994 - 2026)
-2. Some common numbers used to tune parameters for Sensor Fusion and Tracking Toolbox features. For example, 30 is typically used as the default value for [AssignmentThreshold](https://www.mathworks.com/help/fusion/ref/trackergnn-system-object.html#mw_3c48d097-c7d1-4e64-b006-a0d4ab4b924e) for many of our trackers.
-3. Numbers used in examples like [this one](https://www.mathworks.com/help/fusion/ug/air-traffic-control.html) to define the parameters that give our tools grounding in the real world like the \`RangeResolution\` for a radar sensor.
-
-So perhaps there will be a bias towards leading digits for default values like 3 for \`AssignmentThreshold\`. Or perhaps there are some example parameters which appear very often across our documentation pages like the Latitude, Longitude, and Altitude for Logan Airport (\`[42.366978, -71.022362, 50]\`).
  
 ### So, how did we do?
 ---
@@ -63,7 +72,9 @@ where $N$ is the total amount of numbers found in our dataset. Here are the resu
 
 ![Benford Result](https://raw.githubusercontent.com/zachDiaks/mw-benfords-law/main/BenfordResult.png)
 
-By the eye-test, our distribution follows Benford's law pretty closely! Slight deviations are natural in real datasets, but how much deviation is too much to consider your dataset no longer adherent to a natural law? For this, we can leverage some common statistical tests:
+By the eye-test, our distribution follows Benford's law pretty closely! Slight deviations are natural in real datasets, but how much deviation is too much to consider your dataset no longer adherent to a natural law? 
+
+    For this, we can leverage some common statistical tests:
 1. Chi-squared test
 2. Mean Absolute Deviation (MAD) test
 

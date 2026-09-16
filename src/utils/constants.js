@@ -3,12 +3,14 @@ export const BlogList =
         {
             path: "benford",
             name: "Power Laws and Web Scraping: Benford's Law",
-            thumbnail: "BenfordResult.png"
+            thumbnail: "BenfordResult.png",
+            tags: ["Math"]
         },
 
         {
             path: "zipf",
             name: "Power Laws and Web Scraping: Zipf's Law",
-            thumbnail: "ZipfResult.png"
+            thumbnail: "ZipfResult.png",
+            tags: ["Math"]
         }
     ]
